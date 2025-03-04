@@ -37,12 +37,21 @@
 ;; As the threshold is then too high, the program cannot iterate enough times to approach the correct
 ;; answer.
 
-(sqrt 0.00000001)
+;;(sqrt 0.00000001)
 ;;(sqrt 0.001)
 ;;(sqrt 0.01)
 
 
 ;; illustration of tests failing for very large numbers
+;; For very large numbers, the program fails to converge on a guess whose squared difference is small
+;; enough to satisfy the good-enough? provedure's threshold of 0.001. As the numbers are very large, after a number
+;; of itereations, the improve procedure produces the same guess during each iteration. The repeated guess does not satisfy
+;; good-enough? so the result is an infinite loop.
+;;(sqrt 9999000000000000000)
+(sqrt 9999000000000000)
 
 
+;; Alternative good-enough?
+;; Watch how guess changes from one iteration to the next and stop when the change
+;; is a very small fraction of the guess.
 
