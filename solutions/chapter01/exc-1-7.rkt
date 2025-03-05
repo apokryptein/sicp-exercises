@@ -1,11 +1,11 @@
 #lang planet neil/sicp
 
-(define (sqrt-iter guess x)
+(define (sqrt-iter guess last x) ; added last parameter
   (display 'guess: )
   (display guess) (newline)
-  (if (good-enough? guess x)
+  (if (good-enough? guess last) ; last accounted for here
       guess
-      (sqrt-iter (improve guess x) x)))
+      (sqrt-iter (improve guess x) guess x))) ; current guess will be last
 
 (define (improve guess x)
   (display 'newguess: )
@@ -16,17 +16,18 @@
 (define (average x y)
   (/ (+ x y) 2))
 
-(define (good-enough? guess x)
-  (display 'difference: )
-  (display (abs (- (square guess) x)))
-  (newline)
-  (< (abs (- (square guess) x)) 0.001))
+;; Original good-enough?
+;;(define (good-enough? guess x)
+;;  (display 'difference: )
+;;  (display (abs (- (square guess) x)))
+;;  (newline)
+;;  (< (abs (- (square guess) x)) 0.001))
 
 (define (square x)
   (* x x))
 
 (define (sqrt x)
-  (sqrt-iter 1.0 x))
+  (sqrt-iter 1.0 0.0 x)) ; first last guess is 0.0
 
 ;; illustration of tests failing for very samll number
 ;; We can see that when we attempt to calculate the square root
@@ -48,10 +49,15 @@
 ;; of itereations, the improve procedure produces the same guess during each iteration. The repeated guess does not satisfy
 ;; good-enough? so the result is an infinite loop.
 ;;(sqrt 9999000000000000000)
-(sqrt 9999000000000000)
+;;(sqrt 9999000000000000)
 
 
 ;; Alternative good-enough?
 ;; Watch how guess changes from one iteration to the next and stop when the change
 ;; is a very small fraction of the guess.
 
+(define (good-enough? guess last)
+  (< (/ (abs (- guess last)) guess) 0.000000001))
+
+(sqrt 0.00000000000000000000001)
+(sqrt 9999000000000000000)
