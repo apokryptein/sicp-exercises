@@ -13,7 +13,7 @@
   (/ (+ (/ x (square guess)) (* 2 guess)) 3))
 
 (define (good-enough? guess last)
-  (< (/ (abs (- guess last)) guess) 0.00001))
+  (< (/ (abs (- guess last)) guess) 0.000000001))
 
 (define (square x)
   (* x x))
